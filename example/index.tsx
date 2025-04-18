@@ -1,14 +1,27 @@
-import 'react-app-polyfill/ie11';
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { Thing } from '../.';
+import * as ReactDOM from 'react-dom/client';
+import { DialogProvider, useDialog } from '../.';
 
 const App = () => {
+  const { alert } = useDialog();
+  const handleClick = () => {
+    alert({
+      title: 'Hello',
+      message: 'This is a test alert',
+      onOk: () => console.log('Alert closed'),
+    });
+  };
   return (
-    <div>
-      <Thing />
-    </div>
+    <>
+      <div>
+        <button onClick={() => handleClick()}>o</button>
+      </div>
+    </>
   );
 };
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const rootElement = document.getElementById('root');
+if (rootElement) {
+  const root = ReactDOM.createRoot(rootElement);
+  root.render(<App />);
+}
